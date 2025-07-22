@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .weather-box {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 16px;
+      text-align: center;
+      width: 320px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .weather-box h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    .weather-icon {
+      margin: 20px auto;
+    }
+
+    .weather-info {
+      text-align: left;
+      margin-top: 20px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #34495e;
+    }
+
+    .weather-info span {
+      font-weight: bold;
+      color: #000;
+    }
+
+    .form-box {
+      margin-bottom: 30px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 65%;
+      border: 1px solid #ccc;
+      border-radius: 6px 0 0 6px;
+      outline: none;
+    }
+
+    button {
+      padding: 10px 16px;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 0 6px 6px 0;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #219150;
+    }
+  </style>
+</head>
+<body>
+  <div class="weather-box">
+    <form class="form-box" method="POST">
+      {% csrf_token %}
+      <input type="text" name="city" placeholder="Enter city name..." required>
+      <button type="submit">Search</button>
+    </form>
+
+      
+      <h1>{{ weather.city|capfirst }}</h1>
+      {% if weather.country_code %}
+      <div class="weather-icon">
+        <img src="https://openweathermap.org/img/wn/{{ weather.weather_icon }}@2x.png" alt="Weather Icon" width="80" height="80">
+      </div>
+
+      <div class="weather-info">
+        <div><span>Temperature:</span> {{ weather.temperature }}°C</div>
+        <div><span>Humidity:</span> {{ weather.humidity }}%</div>
+        <div><span>Pressure:</span> {{ weather.pressure }} hPa</div>
+        <div><span>Wind Speed:</span> {{ weather.wind_speed }} m/s</div>
+        <div><span>Description:</span> {{ weather.description|capfirst }}</div>
+      </div>
+      {% endif %}
+    
+  </div>
+</body>
+</html>
